@@ -102,11 +102,21 @@ public class RadioTest {
         Assertions.assertEquals(expStation, actStation);
     }
 
-    @Test /** проверяет переключение станции по вводу для числа за пределами условия*/
-    public void shdSwitchToInputIfOutsideBounds() {
+    @Test /** проверяет переключение станции по вводу для числа за пределами условия (больше максимального)*/
+    public void shdSwitchToInputIfAboveMax() {
         Radio curStation = new Radio();
 
         int actStation = curStation.setNmbStation(13);
+        int expStation = 0;
+
+        Assertions.assertEquals(expStation, actStation);
+    }
+
+    @Test /** проверяет переключение станции по вводу для числа за пределами условия (меньше максимального)*/
+    public void shdSwitchToInputIfOutsideBelowMin() {
+        Radio curStation = new Radio();
+
+        int actStation = curStation.setNmbStation(-13);
         int expStation = 0;
 
         Assertions.assertEquals(expStation, actStation);
