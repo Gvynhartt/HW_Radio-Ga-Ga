@@ -1,90 +1,77 @@
 package ru.netology.mein.Radio;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Radio {
     private int nmbStation;
-    /**
-     * сохраняет номер станции [0...9]
-     */
-
     private int totalStations;
-    /**
-     * поле с числом станций, необходимое для конструктора
-     */
-
     private int volSound;
 
-    /**
-     * сохраняет громкость звука [0...10]
-     */
     private int minVolSound = 0;
-    /**
-     * ПЕРЕДЕЛКА ГРОМКОСТИ ПРЕДПОЛАГАЕТ КОНСТРУКТОР ИЛИ НЕТ?
-     */
     private int maxVolSound = 100;
 
-    /**
-     * ТОТ ЖЕ ВОПРОС
-     */
-
-    public Radio(int totalStations) { /** параметризованный конструктор с указанием числа станций*/
+    public Radio(int totalStations) {
         this.totalStations = totalStations;
     }
 
-    public Radio() { /** НЕпараметризованный конструктор, предполагающий число станции по умолчанию (10)*/
+    public Radio() {
         totalStations = 10;
     }
 
-    public int getNmbStation() { /** геттер для номера станции*/
+    public int getNmbStation() {
         return nmbStation;
     }
 
-    public int setNmbStation(int newNmbStation) { /** сеттер (НЕтривиальный) для номера станции*/
-        if (newNmbStation >= (totalStations - totalStations) && newNmbStation < totalStations) {
-            nmbStation = newNmbStation;
+    public int setNmbStation(int nmbStation) {
+        if (nmbStation >= (totalStations - totalStations) && nmbStation < totalStations) {
+            this.nmbStation = nmbStation;
         } else {
-            nmbStation = getNmbStation(); /** в задании не прописано, какое поведение предполагается
-             в случае ввода недопустимого номера станции, поэтому пускай возвращается ранее заданный*/
+            nmbStation = getNmbStation();
         }
         return nmbStation;
     }
 
-    public int getVolSound() { /** геттер для громкости звука*/
+    public int getVolSound() {
         return volSound;
     }
 
-    public void setVolSound(int newVolSound) { /** сеттер (тривиальный) для громкости звука*/
-        volSound = newVolSound;
+    public void setVolSound(int volSound) {
+        this.volSound = volSound;
     }
 
-    public int increaseVolume() { /** метод для увеличения громкости на 1*/
+    public int increaseVolume() {
         if (volSound < maxVolSound) {
             volSound = volSound + 1;
         }
         return volSound;
     }
 
-    public int decreaseVolume() { /** метод для уменьшения громкости на 1*/
+    public int decreaseVolume() {
         if (volSound > minVolSound) {
             volSound = volSound - 1;
         }
         return volSound;
     }
 
-    public int nextStation() { /** метод для переключения станции на следующую (по кнопке)*/
+    public int nextStation() {
         if (nmbStation < (totalStations - 1)) {
             nmbStation = nmbStation + 1;
         } else {
-            nmbStation = totalStations - totalStations; /** как альтернатива простому указанию 0,
-             т.е. первой станции ПО НОМЕРУ*/
+            nmbStation = totalStations - totalStations;
         }
         return nmbStation;
     }
 
-    public int previousStation() { /** метод для переключения станции на предыдущую (по кнопке)*/
+    public int previousStation() {
         if (nmbStation >= 1) {
             nmbStation = nmbStation - 1;
         } else {
-            nmbStation = totalStations - 1; /** переключает на последнюю станцию ПО НОМЕРУ*/
+            nmbStation = totalStations - 1;
         }
         return nmbStation;
     }
