@@ -1,76 +1,67 @@
 package ru.netology.mein.Radio;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@AllArgsConstructor
-@Data
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class Radio {
-    private int nmbStation;
-    private int totalStations;
-    private int volSound;
+    @Getter  int nmbStation;
+    @NonNull int totalStations;
+    @Getter @Setter int volSound;
 
-    private int minVolSound = 0;
-    private int maxVolSound = 100;
-
-    public Radio(int totalStations) {
-        this.totalStations = totalStations;
-    }
+    int minVolSound = 0;
+    int maxVolSound = 100;
 
     public Radio() {
         totalStations = 10;
+    }
+
+    public Radio(@NonNull int totalStations) {
+        this.totalStations = totalStations;
     }
 
     public int getNmbStation() {
         return nmbStation;
     }
 
-    public int setNmbStation(int nmbStation) {
+    public void setNmbStation(int nmbStation) {
         if (nmbStation >= (totalStations - totalStations) && nmbStation < totalStations) {
-            this.nmbStation = nmbStation;
+            nmbStation = nmbStation;
         } else {
             nmbStation = getNmbStation();
         }
-        return nmbStation;
+        this.nmbStation = nmbStation;
     }
 
-    public int getVolSound() {
-        return volSound;
-    }
-
-    public void setVolSound(int volSound) {
-        this.volSound = volSound;
-    }
-
-    public int increaseVolume() {
+    public int increaseVolume() { /** метод для увеличения громкости на 1*/
         if (volSound < maxVolSound) {
             volSound = volSound + 1;
         }
         return volSound;
     }
 
-    public int decreaseVolume() {
+    public int decreaseVolume() { /** метод для уменьшения громкости на 1*/
         if (volSound > minVolSound) {
             volSound = volSound - 1;
         }
         return volSound;
     }
 
-    public int nextStation() {
+    public int nextStation() { /** метод для переключения станции на следующую (по кнопке)*/
         if (nmbStation < (totalStations - 1)) {
             nmbStation = nmbStation + 1;
         } else {
-            nmbStation = totalStations - totalStations;
+            nmbStation = totalStations - totalStations; /** как альтернатива простому указанию 0,
+             т.е. первой станции ПО НОМЕРУ*/
         }
         return nmbStation;
     }
 
-    public int previousStation() {
+    public int previousStation() { /** метод для переключения станции на предыдущую (по кнопке)*/
         if (nmbStation >= 1) {
             nmbStation = nmbStation - 1;
         } else {
-            nmbStation = totalStations - 1;
+            nmbStation = totalStations - 1; /** переключает на последнюю станцию ПО НОМЕРУ*/
         }
         return nmbStation;
     }
