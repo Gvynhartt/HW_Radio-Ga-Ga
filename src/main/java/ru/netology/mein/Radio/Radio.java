@@ -1,67 +1,67 @@
 package ru.netology.mein.Radio;
 
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class Radio {
-    private int nmbStation;
-    /**
-     * сохраняет номер станции [0...9]
-     */
+    @Getter  int nmbStation;
+    @NonNull int totalStations;
+    @Getter @Setter int volSound;
 
-    private int volSound;
+    int minVolSound = 0;
+    int maxVolSound = 100;
 
-    /**
-     * сохраняет громкость звука [0...10]
-     */
+    public Radio() {
+        totalStations = 10;
+    }
 
-    public int getNmbStation() { /** геттер для номера станции*/
+    public Radio(@NonNull int totalStations) {
+        this.totalStations = totalStations;
+    }
+
+    public int getNmbStation() {
         return nmbStation;
     }
 
-    public int setNmbStation(int newNmbStation) { /** сеттер (НЕтривиальный) для номера станции*/
-        if (newNmbStation >= 0 && newNmbStation <= 9) {
-            nmbStation = newNmbStation;
+    public void setNmbStation(int nmbStation) {
+        if (nmbStation >= (totalStations - totalStations) && nmbStation < totalStations) {
+            nmbStation = nmbStation;
         } else {
-            nmbStation = getNmbStation(); /** в задании не прописано, какое поведение предполагается
-             в случае ввода недопустимого номера станции, поэтому пускай возвращается ранее заданный*/
+            nmbStation = getNmbStation();
         }
-        return nmbStation;
-    }
-
-    public int getVolSound() { /** геттер для громкости звука*/
-        return volSound;
-    }
-
-    public void setVolSound(int newVolSound) { /** сеттер (тривиальный) для громкости звука*/
-        volSound = newVolSound;
+        this.nmbStation = nmbStation;
     }
 
     public int increaseVolume() { /** метод для увеличения громкости на 1*/
-        if (volSound < 10) {
+        if (volSound < maxVolSound) {
             volSound = volSound + 1;
         }
         return volSound;
     }
 
     public int decreaseVolume() { /** метод для уменьшения громкости на 1*/
-        if (volSound > 0) {
+        if (volSound > minVolSound) {
             volSound = volSound - 1;
         }
         return volSound;
     }
 
     public int nextStation() { /** метод для переключения станции на следующую (по кнопке)*/
-        if (nmbStation < 9) {
+        if (nmbStation < (totalStations - 1)) {
             nmbStation = nmbStation + 1;
         } else {
-            nmbStation = 0;
+            nmbStation = totalStations - totalStations; /** как альтернатива простому указанию 0,
+             т.е. первой станции ПО НОМЕРУ*/
         }
         return nmbStation;
     }
 
     public int previousStation() { /** метод для переключения станции на предыдущую (по кнопке)*/
-        if (nmbStation > 0) {
+        if (nmbStation >= 1) {
             nmbStation = nmbStation - 1;
         } else {
-            nmbStation = 9;
+            nmbStation = totalStations - 1; /** переключает на последнюю станцию ПО НОМЕРУ*/
         }
         return nmbStation;
     }
